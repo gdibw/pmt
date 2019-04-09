@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Profile Management Tools für das GDI-BW ISO-Metadaten-Profil</title>
+  <meta name="description" content="Profile Management Tools für das GDI-BW ISO-Metadaten-Profil">
+
+  <link rel="stylesheet" href="funktionen-Dateien/bootstrap.htm">
+  <link rel="stylesheet" href="funktionen-Dateien/styles.css">
+
+  <link rel="canonical" href="http://localhost:4000/funktionsumfang.html">
+  <link rel="icon" href="http://localhost:4000/favicon.png" type="image/png">
+  <meta name="viewport" content="width=device-width">
+
+  <link rel="stylesheet" href="funktionen-Dateien/prism-coy.htm">
+  <link rel="stylesheet" href="funktionen-Dateien/prism-line-highlight_002.htm">
+  <link rel="stylesheet" href="funktionen-Dateien/prism-line-numbers.htm">
+
+  <script async="" src="funktionen-Dateien/analytics.js"></script><script src="funktionen-Dateien/jquery.htm" charset="UTF-8"></script>
+
+  <!--[if lt IE 9]>
+  <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <script>
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+              }, i[r].l = 1 * new Date();
+      a = s.createElement(o),
+              m = s.getElementsByTagName(o)[0];
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-45579185-2', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+</head>
+
+
+  <body>
+    <header>
+    <div>
+        <img class="logoImage" src="funktionen-Dateien/logo_lgl.gif" alt="LGLBW Logo" title="LGLBW Logo">
+    </div>
+    <div style="margin-top: 10px; margin-bottom: 10px">
+        <a href="index.html"><h2>Metadatenprofil GDI-BW - Profilpflege in der Cloud</h2></a>
+    </div>
+    <div id="toc">
+        <ol class="tocLevel1">
+            <li><a href="methodik.html">Methodik in der Entwicklung</a></li>
+            <li><a href="konzept.html">Konzept</a></li>
+            <li><a href="funktionen.html">Funktionsumfang der Werkzeuge</a></li>
+            
+            <ol class="tocLevel2">
+                <li><a href="#anlegen">Anlegen eines Profils</a></li>
+                <li><a href="#taggedvalues">Tagged Values</a></li>
+                <li><a href="#verpflObjektart">Verpflichtungsgrad Objektart</a></li>
+                <li><a href="#verpflEigenschaft">Verpflichtungsgrad Eigenschaften</a></li>
+                <li><a href="#kardinalitat">Kardinalität Eigenschaften</a></li>
+                <li><a href="#wertebereich">Einschränkung Wertebereich</a></li>
+                <li><a href="#konsistenz">Konsistenzbedingungen</a></li>
+                <li><a href="#diff">Diff-Anzeige</a></li>
+                <li><a href="#print">Ausdruck der Dokumentation</a></li>
+                <li><a href="#exportETF">Export als ETF-Testsuite</a></li>
+                <li><a href="#exportXML">Export als XML-Beispieldatei</a></li>
+            </ol>
+            
+            <li><a href="migration.html">Migration des Profils</a></li>
+            <li><a href="pflegeprozesse.html">Pflegeprozesse</a></li>
+        </ol>
+    </div>
+
+</header>
+    <div class="page-content">
+      <div class="wrapper">
+        <section>
+
+    <h2><a id="funktionen" class="anchor" href="#funktionen" aria-hidden="true"></a>Funktionen des Profile Mangement Tool (PMT)</h2>
+
+    <p>Ein Profil enthält die folgenden Informationen:</p>
+
+    <ol>
+        <li>Titel und Dokumentation sowie Metadaten zum Autor und Erstellungsprozess</li>
+        <li>Frei definierbare Tag/Wert-Paare für Beispieldaten, ETS-Export, Dokumentation und andere Anwendungsfälle</li>
+        <li>Verpflichtungsgrad auf Objektartenebene</li>
+        <li>Verpflichtungsgrad und Kardinalität auf Eigenschaftsebene</li>
+        <li>Einschränkungen des Wertebereichs</li>
+        <li>Einschränkungen zulässiger Eigenschaftstypen (z.B. Geometrietypen)</li>
+        <li>Wertebereichsabhängigkeiten (<em>"Wenn Element A den Wert x hat, muss Element B den Wert y haben"</em>)</li>
+        <li>Existenzabhängigkeiten (<em>"Wenn Element A existiert, darf Element B nicht existieren/muss Element B existieren")</em></li>
+        <li>Wert-Existenzabhängigkeiten (<em>"Wenn Element A den Wert x hat, darf Element B nicht existieren/muss Element B existieren")</em></li>
+    </ol>
+
+    <p>Neben den Funktionen zur Definition des Profils gibt es auch noch Hilfsfunktionen für den Export:</p>
+
+    <ol>
+        <li>Unterstützung für das vollständige ISO-19139-Schema sowie das CSW 2.0.2 AP ISO 1.0.0-Schema durch Presets
+        </li>
+        <li>Unterstützung für Choices und Substitution Groups</li>
+        <li>Export als ETS-Testsuite</li>
+        <li>Export als XML-Beispieldatei</li>
+		<li>Export der Schemaänderungen als Nachweis</li>
+		<li>Export des vollständigen Schema inkl. Änderungen</li> 
+    </ol>
+
+    <p>Die folgenden Abschnitte beschreiben jede der Funktionen.</p>
+
+    <div id="preset-frame">
+
+        <h3 id="preset" class="anchor" href="#preset" aria-hidden="true">Unterstützung für ISO-19139 und CSW 2.0.2 AP
+            ISO 1.0.0</h3>
+
+        <p>Bevor ein Profil angelegt werden kann, muss das dem Profil als Basis dienende Datenmodell angelegt werden. Im
+            Fall der ISO-19115/19139-Spezifikation oder des CSW 2.0.2 Application Profile ISO 1.0.0 geschieht dies auf
+            Basis eines Presets. Das Anlegen des Modells mittels Preset geht wie folgt:</p>
+
+        <ol>
+            <li>Gehe zu «Schemas»</li>
+            <li>Wähle «Neues Schema anlegen».</li>
+            <li>Wähle «Ein Preset auswählen (INSPIRE-Schemas)».</li>
+            <li>Gebe «ISO» im Suchfeld ein und bestätige die Auswahl des Presets «CSW 2.0.2 Metadata
+                Application Profile 1.0.0» mit «Weiter».
+            </li>
+            <li>Definiere den Namen, den Autor, die Version und die Beschreibung des Schemas.</li>
+            <li>Prüfe die angezeigten Daten und bestätige das Anlegen des Profils.</li>
+        </ol>
+
+        <h3 id="anlegen" class="anchor" href="#anlegen" aria-hidden="true">Anlegen eines Profils mit Titel und
+            Dokumentation</h3>
+
+        <p>Nach dem Anlegen des Schemas ist der zweite Schritt zur Entwicklung eines Profils, das Profil selbst in 
+            hale connect anzulegen. Dafür müssen die folgenden Vorbedingungen erfüllt sein:</p>
+
+        <ol>
+            <li>Anwender muss eingeloggt sein und die Rolle Superanwender oder Themenmanager innehaben</li>
+            <li>Das zu profilierende Datenmodell muss bereits angelegt worden sein. Für INSPIRE-Modelle sowie für das
+                ISO-19115/19139-Metadaten-Schema gibt es ein Preset.
+            </li>
+        </ol>
+
+        <p>Der Workflow zum Anlegen eines Profils ist dann wie folgt:</p>
+
+        <ol>
+            <li>Gehe zu «Schemas»</li>
+            <li>Wähle «Neues Schema anlegen».</li>
+            <li>Wähle «Profil erstellen».</li>
+            <li>Definiere den Namen, den Autor, die Version und die Beschreibung des Profils.</li>
+            <li>Wähle das Schema aus, zu dem ein Profil erstellt werden soll.</li>
+            <li>Prüfe die angezeigten Daten und bestätige das Anlegen des Profils.</li>
+        </ol>
+
+        <p>Die eingegebenen Metadaten können auch später noch geändert werden. Die Beziehung zum Schema kann nicht
+            geändert werden.</p>
+
+    </div>
+
+    <div id="taggedvalues-frame">
+
+        <h3 id="taggedvalues" class="anchor" href="#taggedvalues" aria-hidden="true">Frei definierbare Tag/Wert-Paare für
+            Beispieldaten, abstrakte Testfallbeschreibung und Dokumentation</h3>
+
+        <p>Zu jeder Eigenschaft und Objektart innerhalb eines Schemas oder Profils soll es möglich sein,
+            Schlüssel-Wert-Paare zu ergänzen. Diese werden für mehrere Anwendungsfälle gebraucht, wie die Erzeugung der
+            Beispieldaten, die Erzeugung der Dokumentation der ETF-Testsuite sowie für einen späteren XMI-Export. Auch
+            könnten damit Anforderungen aus den offiziellen (ISO-)Dokumenten verlinkt werden. Zum Hinzufügen von Tagged
+            Values müssen die folgenden Vorbedingungen erfüllt sein:</p>
+
+        <ol>
+            <li>Anwender muss eingeloggt sein und die Rolle Superanwender oder Themenmanager innehaben</li>
+            <li>Das Datenmodell oder Profil muss bereits angelegt worden sein.</li>
+        </ol>
+
+        <p>Die Anzeige des Tag/Wert-Paars erfolgt in einer eigenen Zeile unter den Constraints. Der Workflow zum
+            Hinzufügen eines Tag/Wert-Paars zu einer Eigenschaft in einem Profil ist wie folgt:</p>
+
+        <ol>
+            <li>Gehe zu «Schemas»</li>
+            <li>Gehe zum Profil, zu dem ein Tag/Wert-Paar hinzugefügt werden soll.</li>
+            <li>Gehe zu «Objektarten».</li>
+            <li>Gehe zur Objektart, zu deren Eigenschaft ein Tag/Wert-Paar hinzugefügt werden soll.</li>
+            <li>Klicke auf den "Bearbeiten"-Stift rechts neben der Objektart.</li>
+            <li>Klappe die Eigenschaft aus.</li>
+            <li>Klicke auf «+ Neues Tag/Wert-Paar».</li>
+            <li>Gebe den Schlüssel an (nur a-z, A-Z, 0-9 sowie ., _ und - zulässig).</li>
+            <li>Gebe den Wert an (Beliebiger Freitext zulässig).</li>
+            <li>Bestätige das Hinzufügen des Tag/Wert-Paars mit «Aktualisieren»</li>
+        </ol>
+
+        <p>Um ein Tag/Wert-Paar zu löschen, wird wie folgt vorgegangen:</p>
+
+        <ol>
+            <li>Gehe zu «Schemas»</li>
+            <li>Gehe zum Profil, bei dem das Tag/Wert-Paars gelöscht werden soll.</li>
+            <li>Gehe zu «Objektarten».</li>
+            <li>Gehe zur Objektart, zu deren Eigenschaft ein Tag/Wert-Paar hinzugefügt werden soll.</li>
+            <li>Klicke auf den "Bearbeiten"-Stift rechts neben der Objektart.</li>
+            <li>Klappe die Eigenschaft aus.</li>
+            <li>Klicke auf das rote x rechts nebem dem Wert des Tag/Wert-Paars.</li>
+            <li>Bestätige das Hinzufügen des Tag/Wert-Paars mit «Aktualisieren»</li>
+        </ol>
+
+        <p>Um das Tag/Wert-Paar zu bearbeiten, gehe mit der Maus über den Schlüssel oder den Wert, klicke auf den Text
+            und bearbeite ihn.</p>
+
+        <p>Es werden die folgenden Standardschlüssel unterstützt:</p>
+
+        <ol>
+            <li><code>ATS-Titel</code>: Label für diesen Testfall in der ETF Testsuite.</li>
+            <li><code>ATS-Beschreibung</code>: Beschreibung für diesen Testfall in der ETF Testsuite.</li>
+            <li><code>module-id</code>: Die TestModul-Gruppe, zu der dieser Testfall hinzugefügt werden soll.</li>
+            <li><code>example</code>: Inhalt, der zur Erzeugung von XML-Beispieldateien verwendet werden soll.
+                Bei komplexen Elementen kann der Wert "true" verwendet werden, dass das entsprechende Element 
+                im Beispiel generiert wird.
+            </li>
+        </ol>
+
+    </div>
+
+    <h3 id="verpflObjektart" class="anchor" href="#verpflObjektart" aria-hidden="true">Verpflichtungsgrad auf
+        Objektartenebene</h3>
+
+    <p>Mittels dieser Funktion kann festgelegt werden, von welchen Objektarten in jedem Fall Objekte in einem Datensatz
+        vorkommen müssen. Somit kann z.B. festgelegt werden, dass eine Auflösung (Detailliertheitsgrad, angegeben durch
+        eine Maßstabszahl oder eine Bodenauflösung) angegeben werden muss obwohl vom Schema (ISO) nicht zwingend
+        vorgegeben. Um den Verpflichtungsgrad festzulegen, müssen die folgenden Vorbedingungen erfüllt sein:</p>
+
+    <ol>
+        <li>Anwender muss eingeloggt sein und die Rolle Superanwender oder Themenmanager innehaben</li>
+        <li>Das Profil muss bereits angelegt worden sein.</li>
+    </ol>
+
+    <p>Der Workflow zum Festlegen des Verpflichtungsgrads einer Objektart ist wie folgt:</p>
+
+    <ol>
+        <li>Gehe zu «Schemas»</li>
+        <li>Wähle das Profil, welches bearbeitet werden soll.</li>
+        <li>Gehe zu «Objektarten».</li>
+        <li>Scrolle zu der Objektart, deren Verpflichtungsgrad festgelegt werden soll.</li>
+        <li>Klicke den Toggle-Schalter oben rechts in der Objektart-Titelzeile.</li>
+    </ol>
+
+    <p>Die Prüfung, ob diese Bedingung erfüllt wird, steht auch in der hale connect-Dateianalyse zur Verfügung.</p>
+
+
+    <h3 id="verpflEigenschaft" class="anchor" href="#verpflEigenschaft" aria-hidden="true">Verpflichtungsgrad auf
+        Eigenschaftsebene festlegen</h3>
+
+    <p>In einem Profil wird gelegentlich strenger gefasst, ob eine Eigenschaft in jedem Fall einen Inhalt haben muss,
+        oder nicht. Erlaubt das Schema, die Eigenschaft auch leerzulassen, kann ein gültiger Inhalt im Profil
+        verpflichtend gemacht werden. Um den Verpflichtungsgrad festzulegen, müssen die folgenden Vorbedingungen erfüllt
+        sein:</p>
+
+    <ol>
+        <li>Anwender muss eingeloggt sein und die Rolle Superanwender oder Themenmanager innehaben</li>
+        <li>Das Profil muss bereits angelegt worden sein.</li>
+    </ol>
+
+    <p>Der Workflow zum Festlegen des Verpflichtungsgrads einer Eigenschaft ist wie folgt:</p>
+
+    <ol>
+        <li>Gehe zu «Schemas»</li>
+        <li>Wähle das Profil, welches bearbeitet werden soll.</li>
+        <li>Gehe zu «Objektarten».</li>
+        <li>Scrolle zu der Objektart, für deren Eigenschaften der Verpflichtungsgrad festgelegt werden soll.</li>
+        <li>Klicke auf den Stift rechts, um die Profildetails für diese Objektart zu bearbeiten.</li>
+        <li>Klappe die Eigenschaft aus.</li>
+        <li>Klicke auf den Schalter neben "Inhalt verpflichtend", um den Verpflichtungsgrad zu ändern. Dies ist nur
+            möglich, wenn die Eigenschaft vorher nicht verpflichtend war.
+        </li>
+        <li>Bestätige die Änderung des Verpflichtungsgrades mit «Aktualisieren»</li>
+    </ol>
+
+    <p>Der Verpflichtungsgrad von Choices kann nicht verändert werden, da das Konstrukt Choice bedeutet, dass aus einer
+        Liste von Optionen genau ein Element gewählt werden muss. Soll der Inhalt sichergestellt werden, muss dies auf
+        Ebene der referenzierenden Eigenschaft festgelegt werden. Die Prüfung, ob diese Bedingung erfüllt wird, steht auch
+        in der hale connect-Dateianalyse zur Verfügung.</p>
+
+    <h3 id="kardinalitat" class="anchor" href="#kardinalitat" aria-hidden="true">Kardinalität auf Eigenschaftsebene
+        festlegen</h3>
+
+    <p>Auch die Anzahl, wie oft eine Eigenschaft vorkommen darf, kann im Profil enger als im Schema gefasst werden. So
+        kann die Kardinalität eingeschränkt werden, z.b. von [1..n] zu [1..1]. Um die Kardinalität einzuschränken,
+        müssen die folgenden Vorbedingungen erfüllt sein:</p>
+
+    <ol>
+        <li>Anwender muss eingeloggt sein und die Rolle Superanwender oder Themenmanager innehaben</li>
+        <li>Das Profil muss bereits angelegt worden sein.</li>
+    </ol>
+
+    <p>Der Workflow zum Festlegen der Kardinalität einer Eigenschaft ist wie folgt:</p>
+
+    <ol>
+        <li>Gehe zu «Schemas»</li>
+        <li>Wähle das Profil, welches bearbeitet werden soll.</li>
+        <li>Gehe zu «Objektarten».</li>
+        <li>Klicke auf den Stift rechts, um die Profildetails für diese Objektart zu bearbeiten.</li>
+        <li>Klappe die Eigenschaft aus.</li>
+        <li>Klicke auf die Anzeige der Kardinalität neben dem Eigenschaftstyp, um die Ober- und Untergrenze der
+            Kardinalität zu ändern. Es sind nur engere Werte zulässig.
+        </li>
+        <li>Bestätige die Änderung der Kardinalität mit «Aktualisieren»</li>
+    </ol>
+
+    <p>Bei der Eingabe wird geprüft, ob die minimale Kardinalität geringer oder gleich wie die maximale Kardinalität ist.
+        Die Prüfung, ob diese Bedingung erfüllt wird, steht auch in der hale connect-Dateianalyse zur Verfügung.</p>
+
+    <h3 id="wertebereich" class="anchor" href="#wertebereich" aria-hidden="true">Einschränkungen des Wertebereichs</h3>
+
+    <p>Mit Hilfe dieser Funktion lässt sich einschränken, welche (einfachen) Werte tatsächlich in den Daten vorkommen
+        dürfen. Dabei kann diese Einschränkung sowohl eine bereits bestehende Einschränkung enger fassen oder einen
+        bisher unbeschränkten Wertebereich einschränken. Ein typischer Anwendungsfall ist, wenn aus einer bestehenden
+        Codelist nur genau ein Wert im Kontext des Profils zugelassen werden soll. Um den Wertebereich einer Eigenschaft
+        zu beschränken, müssen die folgenden Vorbedingungen erfüllt sein:</p>
+
+    <ol>
+        <li>Anwender muss eingeloggt sein und die Rolle Superanwender oder Themenmanager innehaben</li>
+        <li>Das Profil muss bereits angelegt worden sein.</li>
+        <li>Wurde im Preset eine Codeliste definiert, können nur Werte aus dieser ausgewählt werden.</li>
+    </ol>
+
+    <p>Der Workflow zum Festlegen des Wertebereichs einer Eigenschaft ist wie folgt:</p>
+
+    <ol>
+        <li>Gehe zu «Schemas»</li>
+        <li>Wähle das Profil, welches bearbeitet werden soll.</li>
+        <li>Gehe zu «Objektarten».</li>
+        <li>Scrolle zu der Objektart, für deren Eigenschaften der Verpflichtungsgrad festgelegt werden soll.</li>
+        <li>Klicke auf den "Bearbeiten"-Stift rechts, um die Typ-Details einzusehen und die Wertebereichs-Eisnchränkung
+            festzulegen.
+        </li>
+        <li>Um für eine beliebige Zeichenkette gültige Werte zu bestimmen, gib diese im Textfeld, getrennt durch ein
+            Komma, ein.
+        </li>
+        <li>Um für ein Feld mit einer Code-Liste oder Enumeration gültige Werte auszuwählen, wähle diese aus der Liste
+            der Optionen aus.
+        </li>
+        <li>Um für ein numerisches Feld einen Wertebereich festzulegen, gib eine Obergrenze sowie eine Untergrenze ein.
+            Diese muss enger gefasst sein als durch bestehende Einschränkungen auf der Ebene des Schemas.
+        </li>
+        <li>Wenn die Bearbeitung abgeschlossen ist, gehe auf "Anlegen".</li>
+    </ol>
+
+    <p>Die Prüfung, ob diese Bedingung erfüllt wird, steht auch in der hale connect-Dateianalyse zur Verfügung.</p>
+
+    <h3 id="konsistenz" class="anchor" href="#konsistenz" aria-hidden="true">Festlegen von Konsistenzbedingungen</h3>
+
+    <p>Nicht alle Bedingungen lassen sich direkt auf einer Eigenschaft oder Objektart definieren. Oft definiert ein
+        Profil Konsistenzbedingungen, die z.B. festlegen, ob eine bestimmte Eigenschaft einen Wert hat, der an Werte
+        einer anderen Eigenschaft gekoppelt ist. Mittels des Editors für Konsistenzbedingungen lassen sich zahlreiche
+    verschiedener solcher Prüfungen definieren:</p>
+
+    <ol>
+        <li>Wertebereichsabhängigkeiten ("Wenn Element A den Wert x hat, muss Element B den Wert y haben")</li>
+        <li>Existenzabhängigkeiten ("Wenn Element A existiert, darf Element B nicht existieren")</li>
+        <li>Wert-Existenzabhängigkeiten ("Wenn Element A den Wert x hat, darf Element B nicht existieren")</li>
+    </ol>
+
+    <p>Jede Konsistenzbedingung besteht aus 1..* einzelne Bedingungen. Jede Bedingung folgt dem Muster IF oder IF...THEN,
+    und wird mit anderen Bedingugnen mit einem logischen Operator verknüpft werden. Zur Auswahl stehen AND, OR und XOR. 
+    Zusätzlich können ein Titel und eine Beschreibung sowie Tag/Wert-Paare vergeben werden.</p>
+
+    <p>Innerhalb einer einzelnen IF / IF..THEN-Bedingung kann entweder auf Existenz (EXISTS) oder auf bestimmte
+        Werte (IS / IS NOT) geprüft werden.</p>
+
+    <p>Um eine Konsistenzbedingung anzulegen, müssen die folgenden Vorbedingungen erfüllt sein:</p>
+
+    <ol>
+        <li>Anwender muss eingeloggt sein und die Rolle Superanwender oder Themenmanager innehaben</li>
+        <li>Das Profil muss bereits angelegt worden sein.</li>
+    </ol>
+
+    <p>Der Workflow zum Anlegen einer Konsistenzbedingung ist wie folgt:</p>
+
+    <ol>
+        <li>Gehe zu «Schemas»</li>
+        <li>Wähle das Profil, welches bearbeitet werden soll.</li>
+        <li>Gehe zu «Konsistenzbedingungen».</li>
+        <li>Klicke auf "+ Konsistenzbedingung hinzufügen".</li>
+        <li>Wähle zuerst den zu verwendenden logischen Operator aus.
+            <ul>
+                <li>AND: Alle Teil-Bedingungen müssen wahr sein, damit die Gesamtbedingung erfüllt ist.</li>
+                <li>OR: Eine oder mehrere Teil-Bedingungen müssen wahr sein, damit die Gesamtbedingung erfüllt ist.</li>
+                <li>XOR: Genau eine Teil-Bedingungen muss wahr sein, damit die Gesamtbedingung erfüllt ist.</li>
+            </ul>
+        </li>
+        <li>Klicke dann auf das oberste Feld «Bedingung erstellen»</li>
+        <li>Wähle nun die Objektart aus, in deren Kontext die Prüfung stattfinden soll. Je spezifischer die Prüfung
+            sein soll, desto eher muss dies die Objektart des Wurzelelements sein (hier: MD_Metadata). Wird eine andere
+            Objektart, wie z.B. <code>MD_Identifier</code> ausgewählt, wird die Prüfung überall, wo dieses Element verwendet wird,
+            angewandt.</li>
+        <li>Nun wird die Dokumenten-Baumstruktur dieser Objektart angezeigt. Um im Baum zu navigieren, klicke auf die
+            Pfeil-Knöpfe links. Um eine THEN-Bedingung festzulegen, klicke auf den Namen des Elements und wähle einen
+            Operator aus, sowie gegebenenfalls einen zu prüfenden Wert. Bei komplexen Eigenschaften steht nur EXISTS
+            zur Verfügung; bei einfachen Eigenschaften stehen EXISTS, IS und IS NOT zur Verfügung.</li>
+        <li>Ist die IF-Bedingung definiert, kann optional eine THEN-Bedingung an beliebiger anderer Stelle im Baum
+            hinzugefügt werden, nach den selben Regeln wie die THEN-Bedingung.</li>
+        <li>Ist mindestens eine THEN-Bedingung definiert, kann im unteren Bereich des Dialogs der logische Ausdruck
+            eingesehen werden. Ist dieser in Ordnung, kann die Teilbedingung mit «Bestätigen» gespeichert
+            werden.</li>
+        <li>Wenn die Bearbeitung der Struktur der Konsistenzbedingungen abgeschlossen ist, gehe auf «Weiter».</li>
+        <li>Ergänze den Namen, die Beschreibung sowie gegebenenfalls Tag/Wert-Paars, und bestätige mit «Anlegen».</li>
+    </ol>
+
+    <p>Soll eine Teilbedingung gelöscht werden, kann dies über das Mülleimer-Symbol rechts der Bedingung erfolgen.</p>
+
+    <h3 id="diff" class="anchor" href="#diff" aria-hidden="true">Differenzanzeige-Modus</h3>
+
+    <p>In der Objektarten-Liste ist es möglich, nur die Objektarten und Eigenschaften anzuzeigen, zu denen Informationen
+    im Profil hinterlegt wurden. Dieser Modus ermöglicht es, schnell einen Überblick über das bestehende Profil zu
+        bekommen. Die meisten Funktionalitäten der normalen Objektarten-Liste werden auch im Differenzanzeige-Modus
+        bereitgestellt; es ist nach wie vor möglich, Einschränkungen zu bearbeiten. Für das Hinzufügen neuer
+        Einschränkungen auf noch nicht bearbeiteten Schemaelementen ist der Modus hingegen nicht gedacht.</p>
+
+    <p>Um den Differenzmodus zu nutzen, müssen die folgenden Vorbedingungen erfüllt sein:</p>
+
+    <ol>
+        <li>Anwender muss eingeloggt sein und die Rolle Superanwender oder Themenmanager innehaben</li>
+        <li>Das Profil muss bereits angelegt worden sein.</li>
+        <li>Im Profil muss mindestens eine Festlegung (Einschränkung, Konsistenzbedingung, Tag/Wert-Paar) gemacht worden sein.</li>
+    </ol>
+
+    <p>Der Workflow zum Wechsel in den Differenzanzeige-Modus ist:</p>
+
+    <ol>
+        <li>Gehe zu «Schemas»</li>
+        <li>Wähle das Profil, welches bearbeitet werden soll.</li>
+        <li>Gehe zu «Objektarten».</li>
+        <li>Lege oben rechts den Schalter «Show diff» um.</li>
+    </ol>
+
+    <h3 id="print" class="anchor" href="#print" aria-hidden="true">Druckausgabe des Profils</h3>
+
+    <p>Da ein Profil in der Regel nur als Dokument verabschiedet werden kann, und eine auch ohne die Plattform hale
+        connect lesbare Profildokumentation essentiell ist, gibt es die Möglichkeit, sowohl das vollständige Profil
+        als auch die Differenzen zum Schema als PDF auszugeben. Hierfür wird der print-media-type sowie die Druckausgabe
+        als PDF der Browser verwendet.</p>
+
+    <p>Um den Differenzmodus zu nutzen, müssen die folgenden Vorbedingungen erfüllt sein:</p>
+
+    <ol>
+        <li>Anwender muss eingeloggt sein und die Rolle Superanwender oder Themenmanager innehaben</li>
+        <li>Das Profil muss bereits angelegt worden sein.</li>
+        <li>Im Profil muss mindestens eine Festlegung (Einschränkung, Konsistenzbedingung, Tag/Wert-Paar) gemacht worden sein.</li>
+    </ol>
+
+    <p>Der Workflow zum Wechsel in den Differenzanzeige-Modus ist:</p>
+
+    <ol>
+        <li>Gehe zu «Schemas»</li>
+        <li>Wähle das Profil, welches bearbeitet werden soll.</li>
+        <li>Gehe zu «Objektarten».</li>
+        <li>Klicke oben rechts auf die Drucken-Schaltfläche.</li>
+        <li>Wähle als Drucker eine PDF-Ausgabe, z.B. «Microsoft Print to PDF» aus und speichere die Datei.</li>
+    </ol>
+
+    <h4>Hinweise</h4>
+
+    <ol>
+        <li>Wir empfehlen die Nutzung von Chrome, da es in FireFox aktuell ein Problem mit der Skalierung der Inhalte gibt.</li>
+    </ol>
+
+    <h3 id="exportETF" class="anchor" href="#exportETF" aria-hidden="true">Export als ETF-Testsuite</h3>
+
+    <p>Eine zentrale Zielsetzung des Projekts ist es, eine formale Profildefinition zu erstellen, aus der ausführbare
+        Tests generiert werden können. Aufgrund der gewünschten Kompatibilität zum INSPIRE Reference Validator wurde als Format für diese Testsuite nicht Schematron, sondern das ETF/BaseX-Format gewählt. Um eine ETF-Testsuite zu nutzen, muss diese exportiert und dann in einer Installation
+        des OpenSource frameworks ETF eingerichtet werden. Um die Testsuite zu exportieren, müssen die folgenden Vorbedingungen erfüllt
+        sein:</p>
+
+    <ol>
+        <li>Anwender muss eingeloggt sein und die Rolle Superanwender oder Themenmanager innehaben</li>
+        <li>Das Profil muss angelegt worden sein.</li>
+        <li>Das Profil muss mindestens eine Bedingung enthalten.</li>
+    </ol>
+
+    <p>Der Workflow zum Exportieren einer ETF-Testsuite ist wie folgt:</p>
+
+    <ol>
+        <li>Gehe zu «Schemas»</li>
+        <li>Wähle das Profil, welches exportiert werden soll.</li>
+        <li>Gehe zu «Dateien».</li>
+        <li>Klicke auf die Button mit der Beschriftung vom Typ «Download as Testsuite».</li>
+    </ol>
+
+    <h3 id="exportXML" class="anchor" href="#exportXML" aria-hidden="true">Export als XML-Beispieldatei</h3>
+
+    <p>Zu jedem Profil soll es möglich sein, einfach Testdaten zu generieren. Diese basieren auf den Vorgaben aus Schema
+        und Profil sowie aus den über Tag/Wert-Paare eingegebenen Beispielwerten. Um eine Beispieldatei zu exportieren,
+        müssen die folgenden Vorbedingungen erfüllt sein:</p>
+
+    <ol>
+        <li>Anwender muss eingeloggt sein und die Rolle Superanwender oder Themenmanager innehaben.</li>
+        <li>Das Profil muss angelegt worden sein.</li>
+        <li>Das Profil muss für alle verpflichtenden Objektarten und Felder gültige Beispielwerte enthalten.</li>
+    </ol>
+
+    <p>Der Workflow zum Exportieren einer XML-Beispieldatei ist wie folgt:</p>
+
+    <ol>
+        <li>Gehe zu «Schemas»</li>
+        <li>Wähle das Profil, für das eine Beispieldatei exportiert werden soll.</li>
+        <li>Gehe zu «Export».</li>
+        <li>Klicke auf den Button mit der Beschriftung "Example XML Document".</li>
+    </ol>
+
+    <h3 id="printDocumentation" class="anchor" href="#printDocumentation" aria-hidden="true">Dokumentation drucken</h3>
+
+    <p>
+        Zu jedem Profil soll es möglich sein, eine Dokumentation zu drucken. Es sollen folgende Ausgaben möglich sein:
+    </p>
+
+    <ol>
+        <li>Ausgabe des vollständigen Datenmodells.</li>
+        <li>Ausgabe der durch das Profil festgelegten Änderungen.</li>
+    </ol>
+
+    <p>Der Workflow zum Ausgabe der Dokumentation ist wie folgt:</p>
+
+    <ol>
+        <li>Gehe zu «Schemas»</li>
+        <li>Wähle das Profil, für das die Dokumentation ausgegeben werden soll.</li>
+        <li>Gehe zu «Objektarten».</li>
+		<li>Klicke auf den Knopf "Drucker-Symbol" um die vollständige Profildokumentaion auszugeben.</li>
+		<i>oder alternativ</i><br>
+		Klicke auf den Knopf "Show Diff" um nur die im Profil festgelegten Änderungen anzuzeigen.
+		<li>Klicke auf den Knopf "Drucker-Symbol" um die Änderungen auszugeben.</li>
+        <li>Benutze die "Print-to-Pdf"-Funktionen der Systemumgebung um die Ausgabe als PDF zu speichern.</li>
+    </ol>
+
+</section>
+
+      </div>
+    </div>
+
+  <footer>
+
+</footer>
+
+<script src="funktionen-Dateien/prism.htm"></script>
+<script src="funktionen-Dateien/prism-line-highlight.htm"></script>
+<script src="funktionen-Dateien/prism-line-numbers_002.htm"></script>
+
+<script src="funktionen-Dateien/scale.js"></script>
+
+
+  
+
+
+</body></html>

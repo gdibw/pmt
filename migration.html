@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Profile Management Tools für das GDI-BW ISO-Metadaten-Profil</title>
+  <meta name="description" content="Profile Management Tools für das GDI-BW ISO-Metadaten-Profil">
+
+  <link rel="stylesheet" href="migration-Dateien/bootstrap.htm">
+  <link rel="stylesheet" href="migration-Dateien/styles.css">
+
+  <link rel="canonical" href="http://localhost:4000/migration.html">
+  <link rel="icon" href="http://localhost:4000/favicon.png" type="image/png">
+  <meta name="viewport" content="width=device-width">
+
+  <link rel="stylesheet" href="migration-Dateien/prism-coy.htm">
+  <link rel="stylesheet" href="migration-Dateien/prism-line-highlight_002.htm">
+  <link rel="stylesheet" href="migration-Dateien/prism-line-numbers.htm">
+
+  <script async="" src="migration-Dateien/analytics.js"></script><script src="migration-Dateien/jquery.htm" charset="UTF-8"></script>
+
+  <!--[if lt IE 9]>
+  <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <script>
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+              }, i[r].l = 1 * new Date();
+      a = s.createElement(o),
+              m = s.getElementsByTagName(o)[0];
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-45579185-2', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+</head>
+
+
+  <body>
+    <header>
+    <div>
+        <img class="logoImage" src="migration-Dateien/logo_lgl.gif" alt="LGLBW Logo" title="LGLBW Logo">
+    </div>
+    <div style="margin-top: 10px; margin-bottom: 10px">
+        <a href="index.html"><h2>Metadatenprofil GDI-BW - Profilpflege in der Cloud</h2></a>
+    </div>
+    <div id="toc">
+        <ol class="tocLevel1">
+            <li><a href="methodik.html">Methodik in der Entwicklung</a></li>
+            <li><a href="konzept.html">Konzept</a></li>
+            <li><a href="funktionen.html">Funktionsumfang der Werkzeuge</a></li>
+            
+            <li><a href="migration.html">Migration des Profils</a></li>
+            <li><a href="pflegeprozesse.html">Pflegeprozesse</a></li>
+        </ol>
+    </div>
+
+</header>
+    <div class="page-content">
+      <div class="wrapper">
+        <section>
+    <h2><a id="study_intro" class="anchor" href="#study_intro" aria-hidden="true"></a>Migration des Profils</h2>
+
+    <p>Im folgenden beschreiben wir den Prozess, der für die Migration des bestehenden GDI-BW-Profils (Excel-Datei) in die Profilwerkzeuge von hale connect verwendet wurde. Dabei wurden zahlreiche Festlegungen getroffen, die auch in der Folge für die Pflege wichtig sind und hier dokumentiert werden.</p>
+
+    <h2><a id="process-overview" class="anchor" href="#process-overview" aria-hidden="true">
+        <span aria-hidden="true" class="octicon octicon-link"></span></a>Überblick über das Vorgehen</h2>
+
+    <p>Die oben genannte Excel-Tabelle enthält in den Zeilen, die über die laufenden Nummern 1 bis 411.3 eindeutig 
+        gekennzeichnet sind, Angaben zum Verpflichtungsgrad der Objektarten, die in den Metadaten-Profilen vorkommen, 
+        und deren Eigenschaften. Diese Angaben werden in den Profilmanagement-Werkzeugen auf drei Ebenen abgebildet:</p>
+
+    <ol>
+        <li>Objektarten</li>
+        <li>Eigenschaften</li>
+        <li>Übergreifende Konsistenz-Bedingungen</li>
+    </ol>
+
+    <p>Um die Beziehung zwischen der Excel-Tabelle sowie der einzelnen Abbildungen in den Profilmanagement-Werkzeugen herzustellen, 
+        werden zu allen Festlegungen im Profil Tag/Wert-Paare angelegt.</p>
+
+    <h2><a id="process-overview" class="anchor" href="#classes" aria-hidden="true">
+            <span aria-hidden="true" class="octicon octicon-link"></span></a>Objektarten</h2>
+
+    <p>Die Überführung in den „Objektarten“-Bereich der entsprechenden Profile auf haleconnect erfolgt 
+        nach dem folgendem Schema:</p>
+
+    <ul>
+        <li>Suche nach der zu überführenden Objektart im Objektarten-Bereich</li>
+        <li>Schalter für verpflichtende Objektarten auf „+1“ stellen. Die Verpflichtung ergibt sich aus dem Vorkommen 
+            mindestens einer verpflichtenden Eigenschaft in der Objektart oder Verwendung der Objektart als Wertebereich 
+            in einer verpflichtenden Eigenschaft einer anderen Objektart.</li>
+    </ul>
+
+    <p>Auf Objektarten-Ebene können derzeit keine Tag/Werte-Paare hinzugefügt werden, es ist aber vorgesehen, eine 
+        entsprechende Funktionalität noch einzurichten. Auch soll später eine Funktion ergänzt werden, mit der 
+        eine abweichende Beschreibung der Objektart hinzugefügt werden kann.</p>
+
+    <h2><a id="process-overview" class="anchor" href="#properties" aria-hidden="true">
+            <span aria-hidden="true" class="octicon octicon-link"></span></a>Eigenschaften</h2>
+
+    <p>Die Überführung von Festlegungen auf Ebene einzelner Eigenschaften erfolgt im „Objektarten“-Bereich des 
+        Profils auf haleconnect nach dem folgendem Schema:</p>
+    
+    <ul>
+        <li>Suche nach der zu überführenden Objektart im Objektarten-Bereich</li>
+        <li>Start der Bearbeitung über Stift-Symbol in der Kopfzeile der Objektart</li>
+        <li>Für jede Eigenschaft der Objektart...
+            <ul>
+                <li>„Inhalt verpflichtend“ auf „ja“ setzen, sofern die Kardinalität für das Profil in Bearbeitung 
+                    (Spalten O und P in Excel-Tabelle) mindestens 1 ist</li>
+                <li>„Zugelassene Werte“ zeigt für Eigenschaften, für deren Füllung Codelisten verwendet werden, alle 
+                    darin vorkommenden Werte an. Sofern einzelne davon für das Profil nicht zugelassen werden sollen, 
+                    können sie mit dem grauen „-“-Symbol ausgegraut und damit für das Profil unzulässig gemacht werden.</li>
+                <li>Kardinalität anpassen, falls abweichend von Wert in ursprünglichem Schema.</li>
+                <li>Tag/Wert-Paar „Stufe Daten“ oder „Stufe Dienste“ anlegen (je nachdem, welches Profil bearbeitet 
+                    wird) und abhängig von der Kennzeichnung in den Spalten E und F mit dem Wert „verpflichtend“ (Wert 
+                    in Excel-Tabelle ist „M“), „bedingt verpflichtend“ (Wert in Excel-Tabelle ist „C“) oder „optional“ 
+                    (Wert in Excel-Tabelle ist „O“) belegen.</li>
+                <li>Tag/Wert-Paar „Deutsche Bezeichnung“ anlegen und mit dem Wert aus Spalte T der Excel-Tabelle belegen</li>
+                <li>Tag/Wert-Paar „Erläuterung“ anlegen und mit dem Wert aus Spalte U der Excel-Tabelle belegen</li>
+                <li>Tag/Wert-Paar „example“ anlegen und für komplexe Datentypen mit dem Wert „true“ belegen. Für 
+                    nicht komplexe Datentypen mit dem Wert aus den Spalten V und W der Excel-Tabelle (abhängig 
+                    davon, welches Profil bearbeitet wird) füllen.</li>
+                <li>Tag/Wert-Paar „Erläuterungen GDI-BW für Daten“ oder „Erläuterungen GDI-BW für Dienste“ anlegen 
+                    (je nachdem, welches Profil bearbeitet wird) und mit dem entsprechenden Wert aus den Spalten M 
+                    oder N der Excel-Tabelle füllen.</li>
+                <li>Tag/Wert-Paar „Laufende Nummer“ anlegen und mit dem Wert aus Spalte A der Excel-Tabelle füllen.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <p>Um sich die in den beschriebenen Schritten hinzugefügten Angaben im Objektarten-Bereich vollständig anzeigen 
+        zu lassen, muss der „Geerbte Eigenschaften anzeigen“-Schalter aktiviert werden, um sicherzugehen, dass auch 
+        solche Eigenschaften inklusive gesetzter Tag/Werte-Paare angezeigt werden, die von anderen Objektarten 
+        geerbt werden.
+    </p>
+
+    <h2><a id="process-overview" class="anchor" href="#consistency-constraints" aria-hidden="true">
+            <span aria-hidden="true" class="octicon octicon-link"></span></a>Konsistenz-Bedingungen</h2>
+
+    <p>Die Spalten M und N der Excel-Tabelle beschreiben Bedingungen, unter denen bestimmte Objektarten oder 
+        deren Eigenschaften verpflichtend sind. Solche Bedingungen können im „Konsistenz-Bedingungen“-Bereich 
+        der Profile modelliert werden:</p>
+
+    <ul>
+        <li>Auf „+ Konsistenz-Bedingung hinzufügen“ klicken.</li>
+        <li>Auf „+Bedingung erstellen“ klicken.</li>
+        <li>Die Objektart auswählen, für die eine Bedingung angelegt werden soll. Wenn es sich um eine Bedingung handelt, 
+            die mehrere Objektarten betrifft, die übergeordnete Objektart auswählen, in der die beiden fraglichen 
+            Objektarten (ggf. auch über mehrere Stufen) verwendet werden – im Falle der beiden Metadaten-Profile ist 
+            das häufig <code>MD_Metadata</code>.</li>
+        <li>Bedingungen formulieren:
+            <ul>
+                <li>Wenn nur eine Eigenschaft betroffen ist, auf diese klicken und auswählen, ob sie existieren 
+                    muss (EXISTS), nicht existieren darf (DOES NOT EXIST), einen bestimmten Wert haben muss (IS) oder 
+                    einen bestimmten Wert nicht haben darf (IS NOT)</li>
+                <li>Wenn zwei Eigenschaften betroffen sind (IF-THEN-Bedingung) zunächst auf die bedingende Eigenschaft 
+                    (IF-Bedingung) klicken und festlegen, welche der oben genannten Fälle eintreten muss, damit die 
+                    Bedingung greift. Anschließend auf die bedingte Eigenschaft (THEN-Bedingung) klicken und festlegen, 
+                    welche der oben genannten Fälle für diese Eigenschaft gelten muss, wenn die Bedingung greift.</li>
+            </ul>
+        </li>
+        <li>Der Bedingung im nächsten Schritt einen Namen und eine Beschreibung hinzufügen. Bei der Überführung der 
+            Profile entspricht der Name der Bedingung der laufenden Nummer oder den laufenden Nummern, unter der 
+            die Bedingung in der Excel-Tabelle formuliert wird.</li>
+    </ul>
+
+    <p>Eigenschaften, deren Bedingungen nicht mit den vorhandenen Methoden technisch geprüft werden können, werden 
+        mit einem zusätzlichen Tag/Werte-Paar namens „Manuelle Überprüfung“ mit dem Wert „Ja“ versehen. Dies dient 
+        als Hinweis darauf, dass die Bedingungen, die im Tag/Werte-Paar Paar „Erläuterungen GDI-BW für Daten“ oder 
+        „Erläuterungen GDI-BW für Dienste“ angegeben werden, manuell geprüft werden müssen.</p>
+
+        <h2><a id="process-overview" class="anchor" href="#special-cases" aria-hidden="true">
+                <span aria-hidden="true" class="octicon octicon-link"></span></a>Sonderfälle und Abweichungen von der Excel-Tabelle</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Laufende Nummer</th>
+                    <th>Abweichung</th>
+                    <th>Status</th>
+                    <th>Bemerkung</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>11.3</td>
+                    <td>Eigenschaft existiert nur in Excel-Tabelle, nicht in ursprünglichem Schema</td>
+                    <td>Wurde bei Profil-Überführung nicht berücksichtigt</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>26</td>
+                    <td>Kardinalität ist in Excel-Tabelle mit 0..n angegeben, durch das Schema aber auf maximal 1 begrenzt</td>
+                    <td>Kardinalität wurde auf 0..1 gesetzt</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>37 (nur Daten)</td>
+                    <td>Laut Mapping-Tabelle verpflichtend, aber die Kardinalität ist 0..n</td>
+                    <td>Kardinalität wurde auf 1..n geändert</td>
+                    <td>Abklärung/Kommunikation 14.02.2019</td>
+                </tr>
+                <tr>
+                    <td>40 (nur Daten)</td>
+                    <td>Laut Mapping-Tabelle verpflichtend, aber die Kardinalität ist 0..n</td>
+                    <td>Kardinalität wurde auf 1..n geändert</td>
+                    <td>Abklärung/Kommunikation 14.02.2019</td>
+                </tr>
+                <tr>
+                    <td>115 (nur Daten)</td>
+                    <td>Beschreibung auf Objektarten-Ebene wäre hilfreich</td>
+                    <td>Noch nicht umgesetzt</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>206</td>
+                    <td>Ist in der Excel-Tabelle als optional gekennzeichnet, hat aber die Kardinalität 0..0</td>
+                    <td>Kardinalität auf 0..1 gesetzt</td>
+                    <td>Abklärung/Kommunikation 23.10.2018</td>
+                </tr>
+                <tr>
+                    <td>344-347 (nur Dienste)</td>
+                    <td>Die Bedingung aus der Excel-Tabelle konnte nicht
+ formuliert werden und wurde daher so angepasst, dass die Eigenschaften 
+für alle Metadaten-Sätze verpflichtend sind, die das Schlüsselwort 
+„inspireidentifiziert“ enthalten</td>
+                    <td>Wurde umgesetzt.</td>
+                    <td>Abklärung/Kommunikation 14.11.2018</td>
+                </tr>
+            </tbody>
+        </table>
+
+</section>
+
+      </div>
+    </div>
+
+  <footer>
+
+</footer>
+
+<script src="migration-Dateien/prism.htm"></script>
+<script src="migration-Dateien/prism-line-highlight.htm"></script>
+<script src="migration-Dateien/prism-line-numbers_002.htm"></script>
+
+<script src="migration-Dateien/scale.js"></script>
+
+
+  
+
+
+</body></html>

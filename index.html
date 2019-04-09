@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Profile Management Tools für das GDI-BW ISO-Metadaten-Profil</title>
+  <meta name="description" content="Profile Management Tools für das GDI-BW ISO-Metadaten-Profil">
+
+  <link rel="stylesheet" href="index-Dateien/bootstrap.htm">
+  <link rel="stylesheet" href="index-Dateien/styles.css">
+
+  <link rel="canonical" href="http://localhost:4000/">
+  <link rel="icon" href="http://localhost:4000/favicon.png" type="image/png">
+  <meta name="viewport" content="width=device-width">
+
+  <link rel="stylesheet" href="index-Dateien/prism-coy.htm">
+  <link rel="stylesheet" href="index-Dateien/prism-line-highlight_002.htm">
+  <link rel="stylesheet" href="index-Dateien/prism-line-numbers.htm">
+
+  <script async="" src="index-Dateien/analytics.js"></script><script src="index-Dateien/jquery.htm" charset="UTF-8"></script>
+
+  <!--[if lt IE 9]>
+  <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <script>
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+              }, i[r].l = 1 * new Date();
+      a = s.createElement(o),
+              m = s.getElementsByTagName(o)[0];
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-45579185-2', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+</head>
+
+
+  <body>
+    <header>
+    <div>
+        <img class="logoImage" src="index-Dateien/logo_lgl.gif" alt="LGLBW Logo" title="LGLBW Logo">
+    </div>
+    <div style="margin-top: 10px; margin-bottom: 10px">
+        <a href="index.html"><h2>Metadatenprofil GDI-BW - Profilpflege in der Cloud</h2></a>
+    </div>
+    <div id="toc">
+        <ol class="tocLevel1">
+            <li><a href="methodik.html">Methodik in der Entwicklung</a></li>
+            <li><a href="konzept.html">Konzept</a></li>
+            <li><a href="funktionen.html">Funktionsumfang der Werkzeuge</a></li>
+            
+            <li><a href="migration.html">Migration des Profils</a></li>
+            <li><a href="pflegeprozesse.html">Pflegeprozesse</a></li>
+        </ol>
+    </div>
+
+</header>
+    <div class="page-content">
+      <div class="wrapper">
+        <section>
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/MIYFc5F3V1E?start=958" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<p></p>
+  <h2><a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true">
+    <span aria-hidden="true" class="octicon octicon-link"></span></a>Ansprechpartner</h2>
+	
+	<p>Sofern Sie mehr über das Projekt erfahren wollen, stehen Ihnen folgende Ansprechpartner zur Verfügung.</p>
+	
+	<ul>
+	  <li>Für das Kompetenzzentrum Geodateninfrastruktur im Landesamt für Geoinformation und Landentwicklung Baden-Württemberg (KomZ-GDI BW): <a href="mailto:steffen.bach@lgl.bwl.de">Steffen Bach</a></li>
+      <li>Für wetransform GmbH: <a href="mailto:tr@wetransform.to">Thorsten Reitz</a></li>
+	</ul>
+	
+  <p>Das Kompetenzzentrum Geodateninfrastruktur (KomZ-GDI) im Landesamt 
+für Geoinformation und Landentwicklung (LGL) hat für die 
+Geodateninfrastruktur Baden-Württemberg (GDI-BW) in den vergangenen 
+Jahren ein eigenes Metadatenprofil auf Basis der ISO19115/19119 
+entwickelt. Dieses berücksichtigt sowohl die INSPIRE und GDI-DE 
+Anforderungen als auch weitere Vorschriften, um spezifische 
+Anwendungsfälle der GDI Partner zu unterstützen.</p>
+
+  <p>Derzeit besteht die Dokumentation des Metadatenprofils in 
+Baden-Württemberg aus einer nicht standardisierten Excel-Liste. Diese 
+ist zum einen schwer zu erstellen, zu pflegen und zu verstehen. Zudem 
+kann diese nicht als Ausgang für automatisch abgeleitete Produkte wie 
+beispielsweise Prüfwerkzeuge dienen.</p>
+
+  <p>Aus diesem Grund ist vorgesehen, das Metadatenprofil mittels eines Systems zu verwalten, um darüber Folgeprodukte wie eine eine vollständige/angepasste Dokumentation, Validierungsregeln für Prüfwerkzeuge sowie das automatisierte Erzeugen von Beispieldateien zu organisieren/erzeugen.</p>
+
+  <p>Im Rahmen dieses Projekts sollen daher die in der Cloud-Lösung <a href="https://www.haleconnect.com">hale connect</a> bestehenden Modellierungs- und Profilierungswerkzeuge so konfiguriert und erweitert werden, dass basierend auf dem ISO19115/19119 Namensraum ein Profil effizient erstellt und fortgeschrieben werden kann. Diese Profilpflege soll auch Auslöser für das Erzeugen von o.g. Folgeprodukten sein. Dazu wird nach Abschluss der Konfiguration und Erweiterung der Werkzeuge das bestehende Profil überführt. Weiterhin wird über Workshops und die begleitende Beratung das notwendige Wissen zur Methodik und Modellierung vermittelt.</p>
+
+  <p>Mit dem erstellten Werkzeug und der erlernten Methodik wird die 
+GDI-BW in der Lage sein, Nutzer und Umsetzer im Bundesland effizienter 
+zu unterstützen und das Profil zügig sowie effizient fortzuschreiben und geeignete Validierungsregeln vorzuhalten.</p>
+
+  <p>Diese Website fasst die Ergebnisse des Projekts, 
+insbesondere die Erweiterung des Funktionsumfangs sowie das Vorgehen bei der Profilmigration in dokumentatorischer Form zusammen.</p>
+
+</section>
+
+      </div>
+    </div>
+
+  <footer>
+ 
+</footer>
+
+<script src="index-Dateien/prism.htm"></script>
+<script src="index-Dateien/prism-line-highlight.htm"></script>
+<script src="index-Dateien/prism-line-numbers_002.htm"></script>
+
+<script src="index-Dateien/scale.js"></script>
+
+
+  
+
+
+</body></html>

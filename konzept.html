@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Konzept des Profile-Management-Tools</title>
+  <meta name="description" content="Profile Management Tools für das GDI-BW ISO-Metadaten-Profil">
+
+  <link rel="stylesheet" href="konzept-Dateien/bootstrap.htm">
+  <link rel="stylesheet" href="konzept-Dateien/styles.css">
+
+  <link rel="canonical" href="http://localhost:4000/konzept.html">
+  <link rel="icon" href="http://localhost:4000/favicon.png" type="image/png">
+  <meta name="viewport" content="width=device-width">
+
+  <link rel="stylesheet" href="konzept-Dateien/prism-coy.htm">
+  <link rel="stylesheet" href="konzept-Dateien/prism-line-highlight_002.htm">
+  <link rel="stylesheet" href="konzept-Dateien/prism-line-numbers.htm">
+
+  <script async="" src="konzept-Dateien/analytics.js"></script><script src="konzept-Dateien/jquery.htm" charset="UTF-8"></script>
+
+  <!--[if lt IE 9]>
+  <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <script>
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+              }, i[r].l = 1 * new Date();
+      a = s.createElement(o),
+              m = s.getElementsByTagName(o)[0];
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-45579185-2', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+</head>
+
+
+  <body>
+    <header>
+    <div>
+        <img class="logoImage" src="konzept-Dateien/logo_lgl.gif" alt="LGLBW Logo" title="LGLBW Logo">
+    </div>
+    <div style="margin-top: 10px; margin-bottom: 10px">
+        <a href="index.html"><h2>Metadatenprofil GDI-BW - Profilpflege in der Cloud</h2></a>
+    </div>
+    <div id="toc">
+        <ol class="tocLevel1">
+            <li><a href="methodik.html">Methodik in der Entwicklung</a></li>
+            <li><a href="konzept.html">Konzept</a></li>
+            <li><a href="funktionen.html">Funktionsumfang der Werkzeuge</a></li>
+            
+            <li><a href="migration.html">Migration des Profils</a></li>
+            <li><a href="pflegeprozesse.html">Pflegeprozesse</a></li>
+        </ol>
+    </div>
+
+</header>
+    <div class="page-content">
+      <div class="wrapper">
+        <section>
+    <h2><a id="ansatz" class="anchor" href="#ansatz" aria-hidden="true"></a>Genereller Ansatz</h2>
+
+    <p>Die Werkzeuge für die Entwicklung von Profilen werden als Erweiterung in <a href="https://haleconnect.com/">hale
+        connect</a> bereitgestellt.</p>
+
+    <p>Ein Profil wird als zusätzliche Ebene zu einem bestehenden Datenmodell verstanden. Auf dieser Ebene werden Regeln
+        festgelegt, wie dieses Datenmodell zu verwenden ist. Dabei kann es zu einem Datenmodell viele Profile geben, die
+        auch gemeinsam angewandt werden können, um einen Datensatz zu prüfen. So ist es zum Beispiel für den
+        vorliegenden Anwendungsfall so, dass verschiedene Vorgaben/Profile kombiniert werden:</p>
+
+    <ol>
+		<li>GDI-BW</li>
+		<li>GDI-DE</li>
+        <li>INSPIRE</li>
+        <li>AdV</li>        
+    </ol>
+
+    <p>Damit Profile kombiniert werden können, müssen sie widerspruchsfrei sein. Jedes Profil, welches mit anderen
+        eingesetzt werden soll, sollte also nur ergänzende Regeln beinhalten, oder solche, die bestehende Regeln enger
+        fassen.</p>
+
+    <p>Jedes Profil kann als Testsuite im Format des <a href="http://inspire-sandbox.jrc.ec.europa.eu/validator/">INSPIRE
+        Reference Validators</a> exportiert werden. Dies ermöglicht die automatisierte Prüfung der Konformität zu einem
+        Profil in Standardtools, die auf BaseX und ETF basieren. Eine exportierte Testsuite sieht wie folgt aus:</p>
+
+    <pre data-line="6" class="line-numbers" data-src="/title-existence.xml">	<code class="language-xml">
+	</code>
+  </pre>
+
+    <p>Eine solche ausführbare Testsuite enthält eine Menge an verschiedenen Elementen, sowohl zum Zwecke der
+        Dokumentation als auch für die Definition des eigentlichen Tests. Die Struktur ist dabei wie folgt:</p>
+
+    <ul>
+        <li>TestModule
+            <ul>
+                <li>TestCase
+                    <ul>
+                        <li>TestStep
+                            <ul>
+                                <li>TestAssertion</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <p>In den Werkzeugen für die Entwicklung von Profilen müssen also 
+alle notwendige Informationen zur Erzeugung einer solchen Testsuite 
+vorhanden sein, oder
+        ableitbar sein. Dies wird über die im Folgenden beschriebenen 
+Funktionen sichergestellt.</p>
+
+    <p>Weiterhin lässt sich zu jedem Profil eine Beispieldatei generieren. Dafür werden in "Tagged Values" gespeicherte
+        Werte herangezogen. Damit die Erzeugung der Beispieldaten funktioniert, muss für jedes Feld im Profil ein
+        passender Wert angegeben werden. Ein solches Beispiel ist hier dokumentiert:</p>
+
+    <pre data-line="6" class="line-numbers" data-src="inspire-dataset-metadata-example.xml">	<code class="language-xml">
+	</code>
+  </pre>
+
+</section>
+
+      </div>
+    </div>
+
+  <footer>
+
+</footer>
+
+<script src="konzept-Dateien/prism.htm"></script>
+<script src="konzept-Dateien/prism-line-highlight.htm"></script>
+<script src="konzept-Dateien/prism-line-numbers_002.htm"></script>
+
+<script src="konzept-Dateien/scale.js"></script>
+
+
+  
+
+
+</body></html>
