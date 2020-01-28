@@ -219,6 +219,14 @@
                 Bei komplexen Elementen kann der Wert "true" verwendet werden, dass das entsprechende Element 
                 im Beispiel generiert wird.
             </li>
+            <li><code>example-xml</code>: Zusätzlich zur Nutzung eines einfachen Text-Wertes für die Erzeugung 
+                einer Beispieldatei kann auch ein XML-Fragment als Beispiel angegeben werden. In diesem Fragment 
+                <em>muss</em> jedes Tag mit einer Namensraumdeklaration versehen werden, damit die Tags für die 
+                spätere Generierung des vollständigen Beispiels eindeutig zuordenbar sind
+                und damit eine Schemavalidierung des Fragments stattfinden kann. Ein solches Fragment kann 
+                beispielsweise so aussehen:
+                <pre><code>&lt;gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco"&gt;Beispieltext&lt;/gco:CharacterString&gt;</code></pre>
+            </li>
         </ol>
 
     </div>
